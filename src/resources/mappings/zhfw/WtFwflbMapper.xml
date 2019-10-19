@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtFwflbDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtFwflb" >
+    <id column="fwid" property="fwid" jdbcType="VARCHAR" />
+    <result column="fwid" property="id" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="flmc" property="flmc" jdbcType="VARCHAR" />
+    <result column="flcx" property="flcx" jdbcType="INTEGER" />
+    <result column="sftj" property="sftj" jdbcType="CHAR" />
+    <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    fwid,parent_id,flmc,flcx,sftj,parent_ids
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select
+    <include refid="Base_Column_List" />
+    from wt_fwflb
+    where fwid = #{fwid}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtFwflb" >
+    select
+    <include refid="Base_Column_List" />
+    from wt_fwflb
+    <where>
+      <if test="flmc !=null and flmc!=''">
+        and flmc = #{flmc}
+      </if>
+      ${dsf}
+    </where>
+    <choose>
+      <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+        order by ${sortField} ${direction}
+      </when>
+      <otherwise>
+        <!-- 默认排序设置 -->
+      </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from wt_fwflb
+    where fwid = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtFwflb" >
+    insert into wt_fwflb (fwid,parent_id,flmc,flcx,sftj,parent_ids)
+    values (#{fwid},#{parentId},#{flmc},#{flcx},#{sftj},#{parentIds})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtFwflb" >
+    update wt_fwflb
+    <set>
+      <if test="parentId != null" >
+        parent_id = #{parentId},
+      </if>
+      <if test="flmc != null" >
+        flmc = #{flmc},
+      </if>
+      <if test="flcx != null" >
+        flcx = #{flcx},
+      </if>
+      <if test="sftj != null" >
+        sftj = #{sftj},
+      </if>
+      <if test="parentIds != null" >
+        parent_ids = #{parentIds},
+      </if>
+    </set>
+    where fwid = #{fwid} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtFwflb" >
+    update wt_fwflb
+    set 
+        parent_id = #{parentId}
+        ,flmc = #{flmc}
+        ,flcx = #{flcx}
+        ,sftj = #{sftj}
+        ,parent_ids = #{parentIds}
+    where fwid = #{fwid} ${dsf}
+  </update>
+</mapper>

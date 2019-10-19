@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtZhfwptQtArticleDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtArticleEdit" >
+    <id column="wzid" property="wzid" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="titlefontcolor" property="titlefontcolor" jdbcType="VARCHAR" />
+    <result column="author" property="author" jdbcType="VARCHAR" />
+    <result column="copyfrom" property="copyfrom" jdbcType="VARCHAR" />
+    <result column="classid" property="classid" jdbcType="VARCHAR" />
+    <result column="artdescription" property="artdescription" jdbcType="LONGVARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="dateandtime" property="dateandtime" jdbcType="TIMESTAMP" />
+    <result column="hits" property="hits" jdbcType="INTEGER" />
+    <result column="dqzt" property="dqzt" jdbcType="VARCHAR" />
+    <result column="istop" property="istop" jdbcType="VARCHAR" />
+    <result column="ishot" property="ishot" jdbcType="VARCHAR" />
+    <result column="isflash" property="isflash" jdbcType="VARCHAR" />
+    <result column="images" property="images" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="qdgxid" property="qdgxid" jdbcType="VARCHAR" />
+    <result column="wzfbsj" property="wzfbsj" jdbcType="VARCHAR" />
+    <result column="zhczrq" property="zhczrq" jdbcType="TIMESTAMP" />
+    <result column="zskid" property="zskid" jdbcType="VARCHAR" />
+    <result column="shcontent" property="shcontent" jdbcType="LONGVARCHAR" />
+    
+    <result column="classname" property="classname" jdbcType="VARCHAR" />
+    <result column="xgid" property="xgid" jdbcType="VARCHAR" />
+    <result column="sumhits" property="sumhits" jdbcType="VARCHAR" />
+    <result column="qdid" property="qdid" jdbcType="VARCHAR" />
+    <result column="dqztStr" property="dqztStr" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  wzid,title,titlefontcolor,author,copyfrom,classid,dateandtime,hits,dqzt,istop,ishot,isflash,images,userid,username,qdgxid,wzfbsj,zhczrq,zskid
+  </sql>
+  <sql id="Blob_Column_List" >
+  artdescription,content
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,<include refid="Blob_Column_List" />
+    from wt_zhfwpt_qt_article
+    where id = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtArticle" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_zhfwpt_qt_article
+    <where>
+    <if test="title !=null and title!=''">
+    and title like concat("%",#{title},"%")
+    </if>
+    <if test="classid !=null and classid!=''">
+    and classid = #{classid}
+    </if>
+	${dsf}
+    </where>
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- 默认排序设置 -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from wt_zhfwpt_qt_article
+    where wzid = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtArticle" >
+    insert into wt_zhfwpt_qt_article (wzid,title,titlefontcolor,author,copyfrom,classid,artdescription,content,dateandtime,hits,dqzt,istop,ishot,isflash,images,userid,username,qdgxid,wzfbsj,zhczrq,zskid,shcontent)
+    values (#{wzid},#{title},#{titlefontcolor},#{author},#{copyfrom},#{classid},#{artdescription},#{content},#{dateandtime},#{hits},#{dqzt},#{istop},#{ishot},#{isflash},#{images},#{userid},#{username},#{qdgxid},#{wzfbsj},#{zhczrq},#{zskid},#{shcontent})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtArticle" >
+    update wt_zhfwpt_qt_article
+    <set>
+      <if test="wzid != null" >
+        wzid = #{wzid},
+      </if>
+      <if test="title != null" >
+        title = #{title},
+      </if>
+      <if test="titlefontcolor != null" >
+        titlefontcolor = #{titlefontcolor},
+      </if>
+      <if test="author != null" >
+        author = #{author},
+      </if>
+      <if test="copyfrom != null" >
+        copyfrom = #{copyfrom},
+      </if>
+      <if test="classid != null" >
+        classid = #{classid},
+      </if>
+      <if test="artdescription != null" >
+        artdescription = #{artdescription},
+      </if>
+      <if test="content != null" >
+        content = #{content},
+      </if>
+      <if test="dateandtime != null" >
+        dateandtime = #{dateandtime},
+      </if>
+      <if test="hits != null" >
+        hits = #{hits},
+      </if>
+      <if test="dqzt != null" >
+        dqzt = #{dqzt},
+      </if>
+      <if test="istop != null" >
+        istop = #{istop},
+      </if>
+      <if test="ishot != null" >
+        ishot = #{ishot},
+      </if>
+      <if test="isflash != null" >
+        isflash = #{isflash},
+      </if>
+      <if test="images != null" >
+        images = #{images},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid},
+      </if>
+      <if test="username != null" >
+        username = #{username},
+      </if>
+      <if test="qdgxid != null" >
+        qdgxid = #{qdgxid},
+      </if>
+      <if test="wzfbsj != null" >
+        wzfbsj = #{wzfbsj},
+      </if>
+      <if test="zhczrq != null" >
+        zhczrq = #{zhczrq},
+      </if>
+      <if test="zskid != null" >
+        zskid = #{zskid},
+      </if>
+      <if test="shcontent != null" >
+        shcontent = #{shcontent},
+      </if>
+    </set>
+    where id = #{id} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtArticle" >
+    update wt_zhfwpt_qt_article
+    set 
+        wzid = #{wzid}
+        ,title = #{title}
+        ,titlefontcolor = #{titlefontcolor}
+        ,author = #{author}
+        ,copyfrom = #{copyfrom}
+        ,classid = #{classid}
+        ,artdescription = #{artdescription}
+        ,content = #{content}
+        ,dateandtime = #{dateandtime}
+        ,hits = #{hits}
+        ,dqzt = #{dqzt}
+        ,istop = #{istop}
+        ,ishot = #{ishot}
+        ,isflash = #{isflash}
+        ,images = #{images}
+        ,userid = #{userid}
+        ,username = #{username}
+        ,qdgxid = #{qdgxid}
+        ,wzfbsj = #{wzfbsj}
+        ,zhczrq = #{zhczrq}
+        ,zskid = #{zskid}
+        ,shcontent = #{shcontent}
+    where id = #{id} ${dsf}
+  </update>
+  
+  
+  
+  
+  <sql id="selectZhfwptQtArticle_List">
+  	a.wzid, a.title, a.titlefontcolor, a.author, a.copyfrom, a.classid, a.dateandtime, a.hits, a.dqzt, 
+  	a.istop, a.ishot, a.isflash, a.images, a.userid, a.username, a.qdgxid, a.wzfbsj, a.zhczrq, a.zskid, b.classname, d.xgid, d.sumhits, d.qdid
+  </sql>
+  <select id="selectZhfwptQtArticle" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtArticleEdit" >
+    select 
+    <include refid="selectZhfwptQtArticle_List" />
+    from 
+    (select c.xgid,
+            sum(c.hits) sumhits,
+            wm_concat(qdid) as qdid
+         from wt_article_qdgx c
+         group by c.xgid) d,
+    wt_zhfwpt_qt_article a 
+    left join wt_zhfwpt_qt_class b on (a.classid = b.classid) 
+    <where>
+    a.wzid = d.xgid
+    <if test="wzid !=null and wzid != ''">
+    and a.wzid = #{wzid}
+    </if>
+    <if test="title !=null and title!=''">
+    and a.title like '%${title}%'
+    </if>
+    <if test="classid !=null and classid != ''">
+    and a.classid = #{classid}
+    </if>
+    <if test="dqzt != null and dqzt != ''">
+    and a.dqzt = #{dqzt}
+    </if>
+	${dsf}
+    </where>
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- 默认排序设置 -->
+   order by a.istop desc, a.wzfbsj desc
+    </otherwise>
+    </choose>
+  </select>
+  
+  
+  <sql id="Base_selectWzid_List" >
+  a.wzid, a.title, a.titlefontcolor, a.author, a.copyfrom, a.classid, a.dateandtime, a.hits, a.dqzt, 
+  	a.istop, a.ishot, a.isflash, a.images, a.userid, a.username, a.qdgxid, a.wzfbsj, a.zhczrq, a.zskid, a.shcontent, b.classname, d.xgid, d.sumhits, d.qdid
+  </sql>
+  <sql id="Blob_selectWzid_List" >
+  a.artdescription,a.content
+  </sql>
+  <select id="selectWzid" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_selectWzid_List" />
+    ,<include refid="Blob_selectWzid_List" />
+    from 
+    (select c.xgid,
+            sum(c.hits) sumhits,
+            wm_concat(qdid) as qdid
+         from wt_article_qdgx c
+         group by c.xgid) d,
+    wt_zhfwpt_qt_article a 
+    left join wt_zhfwpt_qt_class b on (a.classid = b.classid) 
+    where a.wzid = d.xgid and a.wzid = #{id}
+  </select>
+  
+  
+  <insert id="insertZhfwptQtArticle" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtArticleEdit" >
+    insert into wt_zhfwpt_qt_article (wzid,title,titlefontcolor,author,copyfrom,classid,artdescription,content,dateandtime,hits,dqzt,istop,ishot,isflash,images,userid,username,qdgxid,wzfbsj,zhczrq,zskid,shcontent)
+    values (#{wzid},#{title},#{titlefontcolor},#{author},#{copyfrom},#{classid},#{artdescription},#{content},#{dateandtime},#{hits},#{dqzt},#{istop},#{ishot},#{isflash},#{images},#{userid},#{username},#{qdgxid},#{wzfbsj},#{zhczrq},#{zskid},#{shcontent})
+  </insert>
+  
+  
+  <update id="updateZhfwptQtArticle" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtArticleEdit" >
+    update wt_zhfwpt_qt_article
+    <set>
+      <if test="wzid != null" >
+        wzid = #{wzid},
+      </if>
+      <if test="title != null" >
+        title = #{title},
+      </if>
+      <if test="titlefontcolor != null" >
+        titlefontcolor = #{titlefontcolor},
+      </if>
+      <if test="author != null" >
+        author = #{author},
+      </if>
+      <if test="copyfrom != null" >
+        copyfrom = #{copyfrom},
+      </if>
+      <if test="classid != null" >
+        classid = #{classid},
+      </if>
+      <if test="artdescription != null" >
+        artdescription = #{artdescription},
+      </if>
+      <if test="content != null" >
+        content = #{content},
+      </if>
+      <if test="dateandtime != null" >
+        dateandtime = #{dateandtime},
+      </if>
+      <if test="hits != null" >
+        hits = #{hits},
+      </if>
+      <if test="dqzt != null" >
+        dqzt = #{dqzt},
+      </if>
+      <if test="istop != null" >
+        istop = #{istop},
+      </if>
+      <if test="ishot != null" >
+        ishot = #{ishot},
+      </if>
+      <if test="isflash != null" >
+        isflash = #{isflash},
+      </if>
+      <if test="images != null" >
+        images = #{images},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid},
+      </if>
+      <if test="username != null" >
+        username = #{username},
+      </if>
+      <if test="qdgxid != null" >
+        qdgxid = #{qdgxid},
+      </if>
+      <if test="wzfbsj != null" >
+        wzfbsj = #{wzfbsj},
+      </if>
+      <if test="zhczrq != null" >
+        zhczrq = #{zhczrq},
+      </if>
+      <if test="zskid != null" >
+        zskid = #{zskid},
+      </if>
+      <if test="shcontent != null" >
+        shcontent = #{shcontent},
+      </if>
+    </set>
+    where wzid = #{wzid} ${dsf}
+  </update>
+  
+  
+  
+  
+</mapper>

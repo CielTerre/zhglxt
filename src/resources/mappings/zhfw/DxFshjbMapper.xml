@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.DxFshjbDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.DxFshjb" >
+    <result column="ywlsh" property="ywlsh" jdbcType="VARCHAR" />
+    <result column="bldbd" property="bldbd" jdbcType="VARCHAR" />
+    <result column="blywwd" property="blywwd" jdbcType="VARCHAR" />
+    <result column="czywlsh" property="czywlsh" jdbcType="VARCHAR" />
+    <result column="xgywpch" property="xgywpch" jdbcType="VARCHAR" />
+    <result column="dwzh" property="dwzh" jdbcType="VARCHAR" />
+    <result column="grzh" property="grzh" jdbcType="VARCHAR" />
+    <result column="ywlb" property="ywlb" jdbcType="VARCHAR" />
+    <result column="xgywlsh" property="xgywlsh" jdbcType="VARCHAR" />
+    <result column="sjhm" property="sjhm" jdbcType="VARCHAR" />
+    <result column="dxnr" property="dxnr" jdbcType="VARCHAR" />
+    <result column="fszt" property="fszt" jdbcType="VARCHAR" />
+    <result column="sbyy" property="sbyy" jdbcType="VARCHAR" />
+    <result column="fsrzh" property="fsrzh" jdbcType="VARCHAR" />
+    <result column="fsrxm" property="fsrxm" jdbcType="VARCHAR" />
+    <result column="fsrq" property="fsrq" jdbcType="TIMESTAMP" />
+    <result column="dfywlsh" property="dfywlsh" jdbcType="VARCHAR" />
+    <result column="sjssqy" property="sjssqy" jdbcType="VARCHAR" />
+    <result column="fsqdid" property="fsqdid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  ywlsh,bldbd,blywwd,czywlsh,xgywpch,dwzh,grzh,ywlb,xgywlsh,sjhm,dxnr,fszt,sbyy,fsrzh,fsrxm,fsrq,dfywlsh,sjssqy,fsqdid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from DX_FSHJB
+    where ywlsh = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.DxFshjb" >
+    select 
+    <include refid="Base_Column_List" />
+    from DX_FSHJB
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from DX_FSHJB
+    where ywlsh = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.DxFshjb" >
+    insert into DX_FSHJB (ywlsh,bldbd,blywwd,czywlsh,xgywpch,dwzh,grzh,ywlb,xgywlsh,sjhm,dxnr,fszt,sbyy,fsrzh,fsrxm,fsrq,dfywlsh,sjssqy,fsqdid)
+    values (#{ywlsh},#{bldbd},#{blywwd},#{czywlsh},#{xgywpch},#{dwzh},#{grzh},#{ywlb},#{xgywlsh},#{sjhm},#{dxnr},#{fszt},#{sbyy},#{fsrzh},#{fsrxm},#{fsrq},#{dfywlsh},#{sjssqy},#{fsqdid})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.DxFshjb" >
+    update DX_FSHJB
+    <set>
+      <if test="ywlsh != null" >
+        ywlsh = #{ywlsh},
+      </if>
+      <if test="bldbd != null" >
+        bldbd = #{bldbd},
+      </if>
+      <if test="blywwd != null" >
+        blywwd = #{blywwd},
+      </if>
+      <if test="czywlsh != null" >
+        czywlsh = #{czywlsh},
+      </if>
+      <if test="xgywpch != null" >
+        xgywpch = #{xgywpch},
+      </if>
+      <if test="dwzh != null" >
+        dwzh = #{dwzh},
+      </if>
+      <if test="grzh != null" >
+        grzh = #{grzh},
+      </if>
+      <if test="ywlb != null" >
+        ywlb = #{ywlb},
+      </if>
+      <if test="xgywlsh != null" >
+        xgywlsh = #{xgywlsh},
+      </if>
+      <if test="sjhm != null" >
+        sjhm = #{sjhm},
+      </if>
+      <if test="dxnr != null" >
+        dxnr = #{dxnr},
+      </if>
+      <if test="fszt != null" >
+        fszt = #{fszt},
+      </if>
+      <if test="sbyy != null" >
+        sbyy = #{sbyy},
+      </if>
+      <if test="fsrzh != null" >
+        fsrzh = #{fsrzh},
+      </if>
+      <if test="fsrxm != null" >
+        fsrxm = #{fsrxm},
+      </if>
+      <if test="fsrq != null" >
+        fsrq = #{fsrq},
+      </if>
+      <if test="dfywlsh != null" >
+        dfywlsh = #{dfywlsh},
+      </if>
+      <if test="sjssqy != null" >
+        sjssqy = #{sjssqy},
+      </if>
+      <if test="fsqdid != null" >
+        fsqdid = #{fsqdid},
+      </if>
+    </set>
+    where ywlsh = #{ywlsh} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.DxFshjb" >
+    update DX_FSHJB
+    set 
+        ywlsh = #{ywlsh}
+        ,bldbd = #{bldbd}
+        ,blywwd = #{blywwd}
+        ,czywlsh = #{czywlsh}
+        ,xgywpch = #{xgywpch}
+        ,dwzh = #{dwzh}
+        ,grzh = #{grzh}
+        ,ywlb = #{ywlb}
+        ,xgywlsh = #{xgywlsh}
+        ,sjhm = #{sjhm}
+        ,dxnr = #{dxnr}
+        ,fszt = #{fszt}
+        ,sbyy = #{sbyy}
+        ,fsrzh = #{fsrzh}
+        ,fsrxm = #{fsrxm}
+        ,fsrq = #{fsrq}
+        ,dfywlsh = #{dfywlsh}
+        ,sjssqy = #{sjssqy}
+        ,fsqdid = #{fsqdid}
+    where ywlsh = #{ywlsh} ${dsf}
+  </update>
+</mapper>

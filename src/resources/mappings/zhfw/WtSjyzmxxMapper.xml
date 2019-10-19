@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtSjyzmxxDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtSjyzmxx" >
+    <result column="ywlsh" property="ywlsh" jdbcType="VARCHAR" />
+    <result column="qdid" property="qdid" jdbcType="VARCHAR" />
+    <result column="yhid" property="yhid" jdbcType="VARCHAR" />
+    <result column="yhlbdm" property="yhlbdm" jdbcType="VARCHAR" />
+    <result column="dtmyz" property="dtmyz" jdbcType="VARCHAR" />
+    <result column="sjhm" property="sjhm" jdbcType="VARCHAR" />
+    <result column="yzm" property="yzm" jdbcType="VARCHAR" />
+    <result column="yzmfssj" property="yzmfssj" jdbcType="TIMESTAMP" />
+    <result column="yzmyzsj" property="yzmyzsj" jdbcType="TIMESTAMP" />
+    <result column="xgyslsh" property="xgyslsh" jdbcType="VARCHAR" />
+    <result column="yzmzt" property="yzmzt" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  ywlsh,qdid,yhid,yhlbdm,dtmyz,sjhm,yzm,yzmfssj,yzmyzsj,xgyslsh,yzmzt
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WT_SJYZMXX
+    where ywlsh = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtSjyzmxx" >
+    select 
+    <include refid="Base_Column_List" />
+    from WT_SJYZMXX
+      <where>
+          <if test="qdid != null and qdid != ''">
+              and qdid = #{qdid}
+          </if>
+          <if test="yhid != null and yhid != ''">
+              and yhid = #{yhid}
+          </if>
+          <if test="dtmyz != null and dtmyz != ''">
+              and dtmyz = #{dtmyz}
+          </if>
+          <if test="sjhm != null and sjhm != ''">
+              and sjhm = #{sjhm}
+          </if>
+          <if test="yzm != null and yzm != ''">
+              and yzm = #{yzm}
+          </if>
+          <if test="yzmfssj != null and yzmfssj != ''">
+              and yzmfssj = #{yzmfssj}
+          </if>
+
+      </where>
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from WT_SJYZMXX
+    where ywlsh = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtSjyzmxx" >
+    insert into WT_SJYZMXX (ywlsh,qdid,yhid,yhlbdm,dtmyz,sjhm,yzm,yzmfssj,yzmyzsj,xgyslsh,yzmzt)
+    values (#{ywlsh},#{qdid},#{yhid},#{yhlbdm},#{dtmyz},#{sjhm},#{yzm},#{yzmfssj},#{yzmyzsj},#{xgyslsh},#{yzmzt})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtSjyzmxx" >
+    update WT_SJYZMXX
+    <set>
+      <if test="qdid != null" >
+        qdid = #{qdid},
+      </if>
+      <if test="yhid != null" >
+        yhid = #{yhid},
+      </if>
+      <if test="yhlbdm != null" >
+        yhlbdm = #{yhlbdm},
+      </if>
+      <if test="dtmyz != null" >
+        dtmyz = #{dtmyz},
+      </if>
+      <if test="sjhm != null" >
+        sjhm = #{sjhm},
+      </if>
+      <if test="yzm != null" >
+        yzm = #{yzm},
+      </if>
+      <if test="yzmfssj != null" >
+        yzmfssj = #{yzmfssj},
+      </if>
+      <if test="yzmyzsj != null" >
+        yzmyzsj = #{yzmyzsj},
+      </if>
+      <if test="xgyslsh != null" >
+        xgyslsh = #{xgyslsh},
+      </if>
+      <if test="yzmzt != null" >
+        yzmzt = #{yzmzt},
+      </if>
+    </set>
+    where ywlsh = #{ywlsh} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtSjyzmxx" >
+    update WT_SJYZMXX
+    set 
+        qdid = #{qdid}
+        ,yhid = #{yhid}
+        ,yhlbdm = #{yhlbdm}
+        ,dtmyz = #{dtmyz}
+        ,sjhm = #{sjhm}
+        ,yzm = #{yzm}
+        ,yzmfssj = #{yzmfssj}
+        ,yzmyzsj = #{yzmyzsj}
+        ,xgyslsh = #{xgyslsh}
+        ,yzmzt = #{yzmzt}
+    where ywlsh = #{ywlsh} ${dsf}
+  </update>
+</mapper>

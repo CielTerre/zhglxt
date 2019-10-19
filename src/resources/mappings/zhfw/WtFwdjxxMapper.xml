@@ -1,0 +1,164 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtFwdjxxDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtFwdjxx" >
+    <id column="fwid" property="fwid" jdbcType="VARCHAR" />
+    <result column="fwmc" property="fwmc" jdbcType="VARCHAR" />
+    <result column="fwsm" property="fwsm" jdbcType="VARCHAR" />
+    <result column="fwsrcssm" property="fwsrcssm" jdbcType="VARCHAR" />
+    <result column="fwsccssm" property="fwsccssm" jdbcType="VARCHAR" />
+    <result column="fwzt" property="fwzt" jdbcType="VARCHAR" />
+    <result column="fwdjrq" property="fwdjrq" jdbcType="DATE" />
+    <result column="fwtyrq" property="fwtyrq" jdbcType="DATE" />
+    <result column="fwxhrq" property="fwxhrq" jdbcType="DATE" />
+    <result column="zhczrzh" property="zhczrzh" jdbcType="VARCHAR" />
+    <result column="zhczrxm" property="zhczrxm" jdbcType="VARCHAR" />
+    <result column="zhczrq" property="zhczrq" jdbcType="DATE" />
+    <result column="zhczqdid" property="zhczqdid" jdbcType="VARCHAR" />
+    <result column="fwfl" property="fwfl" jdbcType="VARCHAR" />
+    <result column="fwxz" property="fwxz" jdbcType="CHAR" />
+    <result column="zjbd" property="zjbd" jdbcType="CHAR" />
+    <result column="fwsj" property="fwsj" jdbcType="VARCHAR" />
+    <result column="jgzrsl" property="jgzrsl" jdbcType="CHAR" />
+    <result column="fwslsjd" property="fwslsjd" jdbcType="VARCHAR" />
+    <result column="flmc" property="flmc" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  fwid,fwmc,fwsm,fwsrcssm,fwsccssm,fwzt,fwdjrq,fwtyrq,fwxhrq,zhczrzh,zhczrxm,zhczrq,zhczqdid,fwfl,fwxz,zjbd,fwsj,jgzrsl,fwslsjd,flmc
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_fwdjxx
+    where fwid = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtFwdjxx" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_fwdjxx
+    <where>
+    <if test="fwid !=null and fwid!=''">
+    	and fwid = #{fwid}
+    </if>
+    <if test="fwmc !=null and fwmc!=''">
+    	and fwmc like <![CDATA[ '%'||#{fwmc}||'%']]>
+    </if>
+      <if test="fwsm !=null and fwsm!=''">
+        and fwsm like <![CDATA[ '%'||#{fwsm}||'%']]>
+      </if>
+    <if test="fwfl !=null and fwfl!=''">
+    	and fwfl = #{fwfl}
+    </if>
+      <if test="fwxz !=null and fwxz!=''">
+        and fwxz = #{fwxz}
+      </if>
+	${dsf}
+    </where>
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- 默认排序设置 -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from wt_fwdjxx
+    where fwid = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtFwdjxx" >
+    insert into wt_fwdjxx (fwid,fwmc,fwsm,fwsrcssm,fwsccssm,fwzt,fwdjrq,fwtyrq,fwxhrq,zhczrzh,zhczrxm,zhczrq,fwfl,fwxz,zjbd,fwsj,jgzrsl,fwslsjd)
+    values (#{fwid},#{fwmc},#{fwsm},#{fwsrcssm},#{fwsccssm},#{fwzt},#{fwdjrq},#{fwtyrq},#{fwxhrq},#{zhczrzh},#{zhczrxm},#{zhczrq},#{fwfl},#{fwxz},#{zjbd},#{fwsj},#{jgzrsl},#{fwslsjd})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtFwdjxx" >
+    update wt_fwdjxx
+    <set>
+      <if test="fwmc != null" >
+        fwmc = #{fwmc},
+      </if>
+      <if test="fwsm != null" >
+        fwsm = #{fwsm},
+      </if>
+      <if test="fwsrcssm != null" >
+        fwsrcssm = #{fwsrcssm},
+      </if>
+      <if test="fwsccssm != null" >
+        fwsccssm = #{fwsccssm},
+      </if>
+      <if test="fwzt != null" >
+        fwzt = #{fwzt},
+      </if>
+      <if test="fwdjrq != null" >
+        fwdjrq = #{fwdjrq},
+      </if>
+      <if test="zhczrzh != null" >
+        zhczrzh = #{zhczrzh},
+      </if>
+      <if test="zhczrxm != null" >
+        zhczrxm = #{zhczrxm},
+      </if>
+      <if test="zhczrq != null" >
+        zhczrq = #{zhczrq},
+      </if>
+      <if test="fwfl != null" >
+        fwfl = #{fwfl},
+      </if>
+      <if test="fwxz != null" >
+        fwxz = #{fwxz},
+      </if>
+      <if test="zjbd != null" >
+        zjbd = #{zjbd},
+      </if>
+      <if test="fwsj != null" >
+        fwsj = #{fwsj},
+      </if>
+      <if test="jgzrsl != null" >
+        jgzrsl = #{jgzrsl},
+      </if>
+      <if test="fwslsjd != null" >
+        fwslsjd = #{fwslsjd},
+      </if>
+      <if test="flmc != null" >
+        flmc = #{flmc},
+      </if>
+    </set>
+    where fwid = #{id} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtFwdjxx" >
+    update wt_fwdjxx
+    set fwmc = #{fwmc}
+        ,fwsm = #{fwsm}
+        ,fwsrcssm = #{fwsrcssm}
+        ,fwsccssm = #{fwsccssm}
+        ,fwzt = #{fwzt}
+        ,fwdjrq = #{fwdjrq}
+        ,zhczrzh = #{zhczrzh}
+        ,zhczrxm = #{zhczrxm}
+        ,zhczrq = #{zhczrq}
+        ,fwfl = #{fwfl}
+        ,fwxz = #{fwxz}
+        ,zjbd = #{zjbd}
+        ,fwsj = #{fwsj}
+        ,jgzrsl = #{jgzrsl}
+        ,fwslsjd = #{fwslsjd}
+        ,flmc = #{flmc}
+    where fwid = #{id} ${dsf}
+  </update>
+
+  <select id="selectBindService" resultType="java.util.HashMap">
+    select f.fwsm,f.fwid,f.flmc,decode(nvl(q.qdid,0),'0',0,1) bindState
+    from wt_fwdjxx f
+    left outer join wt_qdfwjrxx q on  f.fwid=q.fwid and q.qdid=#{qdid}
+    <where>
+    <if test="fwsm !=null and fwsm!=''">
+      and fwsm like <![CDATA[ '%'||#{fwsm}||'%']]>
+    </if>
+    <if test="fwfl !=null and fwfl!=''">
+      and fwfl = #{fwfl}
+    </if>
+  </where>
+   order by f.fwid asc
+  </select>
+</mapper>

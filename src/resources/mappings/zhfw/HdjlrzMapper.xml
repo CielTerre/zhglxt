@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.HdjlrzDao">
+   <resultMap type="com.seezoon.framework.modules.zhfw.entity.Hdjlrz" id="BaseResultMap">
+       <id column="ywlsh" property="ywlsh" />
+       <result column="yhxm" property="yhxm"/>
+       <result column="fqsj" property="fqsj"/>
+       <result column="kfxm" property="kfxm"/>
+       <result column="fyrxm" property="fyrxm"/>
+       <result column="fyrnr" property="fyrnr"/>
+       <result column="xgywlsh" property="xgywlsh"/>
+   </resultMap>
+   <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.Hdjlrz">
+   select yhxm,fqsj,kfxm from WT_HDJLXX
+   </select>
+
+</mapper>

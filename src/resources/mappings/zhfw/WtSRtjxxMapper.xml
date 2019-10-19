@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtSRtjxxDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtSRtjxx" >
+    <id column="ywlsh" property="ywlsh" jdbcType="VARCHAR" />
+    <result column="qdid" property="qdid" jdbcType="VARCHAR" />
+    <result column="tjrq" property="tjrq" jdbcType="TIMESTAMP" />
+    <result column="tjzb" property="tjzb" jdbcType="VARCHAR" />
+    <result column="tjzbmx" property="tjzbmx" jdbcType="VARCHAR" />
+    <result column="tjz" property="tjz" jdbcType="DECIMAL" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  ywlsh,qdid,tjrq,tjzb,tjzbmx,tjz
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_s_rtjxx
+    where id = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtSRtjxx" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_s_rtjxx
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- 默认排序设置 -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from wt_s_rtjxx
+    where id = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtSRtjxx" >
+    insert into wt_s_rtjxx (ywlsh,qdid,tjrq,tjzb,tjzbmx,tjz)
+    values (#{ywlsh},#{qdid},#{tjrq},#{tjzb},#{tjzbmx},#{tjz})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtSRtjxx" >
+    update wt_s_rtjxx
+    <set>
+      <if test="ywlsh != null" >
+        ywlsh = #{ywlsh},
+      </if>
+      <if test="qdid != null" >
+        qdid = #{qdid},
+      </if>
+      <if test="tjrq != null" >
+        tjrq = #{tjrq},
+      </if>
+      <if test="tjzb != null" >
+        tjzb = #{tjzb},
+      </if>
+      <if test="tjzbmx != null" >
+        tjzbmx = #{tjzbmx},
+      </if>
+      <if test="tjz != null" >
+        tjz = #{tjz},
+      </if>
+    </set>
+    where id = #{id} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtSRtjxx" >
+    update wt_s_rtjxx
+    set 
+        ywlsh = #{ywlsh}
+        ,qdid = #{qdid}
+        ,tjrq = #{tjrq}
+        ,tjzb = #{tjzb}
+        ,tjzbmx = #{tjzbmx}
+        ,tjz = #{tjz}
+    where id = #{id} ${dsf}
+  </update>
+</mapper>

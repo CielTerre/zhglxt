@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtZhfwptGuestbookDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtZhfwptGuestbook" >
+    <id column="guestbookid" property="guestbookid" jdbcType="VARCHAR" />
+    <result column="shzt" property="shzt" jdbcType="VARCHAR" />
+    <result column="userid" property="userid" jdbcType="VARCHAR" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="addip" property="addip" jdbcType="VARCHAR" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="content" property="content" jdbcType="LONGVARCHAR" />
+    <result column="addtime" property="addtime" jdbcType="DATE" />
+    <result column="recontent" property="recontent" jdbcType="LONGVARCHAR" />
+    <result column="retime" property="retime" jdbcType="DATE" />
+    <result column="qdgxid" property="qdgxid" jdbcType="VARCHAR" />
+    <result column="hfzt" property="hfzt" jdbcType="VARCHAR" />
+    <result column="hflrrzh" property="hflrrzh" jdbcType="VARCHAR" />
+    <result column="classid" property="classid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  guestbookid,shzt,userid,username,addip,title,addtime,retime,qdgxid,hfzt,hflrrzh,classid
+  </sql>
+  <sql id="Blob_Column_List" >
+  content,recontent
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    ,<include refid="Blob_Column_List" />
+    from wt_zhfwpt_guestbook
+    where guestbookid = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptGuestbook" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_zhfwpt_guestbook
+    <where>
+    <if test="username !=null and username!=''">
+    and username = #{username}
+    </if>
+    <if test="title !=null and title!=''">
+    and title = #{title}
+    </if>
+    <if test="content !=null and content!=''">
+    and content = #{content}
+    </if>
+    <if test="hfzt !=null and hfzt!=''">
+    and hfzt = #{hfzt}
+    </if>
+	${dsf}
+    </where>
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- 默认排序设置 -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from wt_zhfwpt_guestbook
+    where guestbookid = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptGuestbook" >
+    insert into wt_zhfwpt_guestbook (guestbookid,shzt,userid,username,addip,title,content,addtime,recontent,retime,qdgxid,hfzt,hflrrzh,classid)
+    values (#{guestbookid},#{shzt},#{userid},#{username},#{addip},#{title},#{content},#{addtime},#{recontent},#{retime},#{qdgxid},#{hfzt},#{hflrrzh},#{classid})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptGuestbook" >
+    update wt_zhfwpt_guestbook
+    <set>
+      <if test="guestbookid != null" >
+        guestbookid = #{guestbookid},
+      </if>
+      <if test="shzt != null" >
+        shzt = #{shzt},
+      </if>
+      <if test="userid != null" >
+        userid = #{userid},
+      </if>
+      <if test="username != null" >
+        username = #{username},
+      </if>
+      <if test="addip != null" >
+        addip = #{addip},
+      </if>
+      <if test="title != null" >
+        title = #{title},
+      </if>
+      <if test="content != null" >
+        content = #{content},
+      </if>
+      <if test="addtime != null" >
+        addtime = #{addtime},
+      </if>
+      <if test="recontent != null" >
+        recontent = #{recontent},
+      </if>
+      <if test="retime != null" >
+        retime = #{retime},
+      </if>
+      <if test="qdgxid != null" >
+        qdgxid = #{qdgxid},
+      </if>
+      <if test="hfzt != null" >
+        hfzt = #{hfzt},
+      </if>
+      <if test="hflrrzh != null" >
+        hflrrzh = #{hflrrzh},
+      </if>
+      <if test="classid != null" >
+        classid = #{classid},
+      </if>
+    </set>
+    where guestbookid = #{guestbookid} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptGuestbook" >
+    update wt_zhfwpt_guestbook
+    set 
+        guestbookid = #{guestbookid}
+        ,shzt = #{shzt}
+        ,userid = #{userid}
+        ,username = #{username}
+        ,addip = #{addip}
+        ,title = #{title}
+        ,content = #{content}
+        ,addtime = #{addtime}
+        ,recontent = #{recontent}
+        ,retime = #{retime}
+        ,qdgxid = #{qdgxid}
+        ,hfzt = #{hfzt}
+        ,hflrrzh = #{hflrrzh}
+        ,classid = #{classid}
+    where guestbookid = #{guestbookid} ${dsf}
+  </update>
+</mapper>

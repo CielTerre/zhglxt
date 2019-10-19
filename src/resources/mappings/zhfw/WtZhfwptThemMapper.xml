@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtZhfwptThemDao">
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtZhfwptThem" >
+	<id  column="THEMEID" property="themeid" jdbcType="VARCHAR" />
+	<result  column="THEMETITLE" property="themetitle" jdbcType="VARCHAR" />
+	<result  column="LRRZH" property="lrrzh" jdbcType="VARCHAR" />
+	<result  column="LRRQ" property="lrrq" jdbcType="TIMESTAMP" />
+	<result  column="DQZT" property="dqzt" jdbcType="VARCHAR" />
+</resultMap>
+<sql id="Base_Column_List" >
+	THEMEID,THEMETITLE,LRRZH,LRRQ,DQZT
+</sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WT_ZHFWPT_THEM
+    where THEMEID = #{id}
+  </select>
+<select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptThem" >
+    select 
+    <include refid="Base_Column_List" />
+    from WT_ZHFWPT_THEM
+    <where>
+      <if test="themeid !=null and themeid!=''">
+        THEMEID = #{themeid}
+      </if>
+      <if test="themetitle !=null and themetitle!=''">
+        THEMETITLE = #{themetitle}
+      </if>
+      <if test="lrrzh !=null and lrrzh!=''">
+        LRRZH = #{lrrzh}
+      </if>
+      <if test="lrrq !=null and lrrq!=''">
+        LRRQ = #{lrrq}
+      </if>
+      <if test="dqzt !=null and dqzt!=''">
+        DQZT = #{dqzt}
+      </if>
+      ${dsf}
+    </where>
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- default sort -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from WT_ZHFWPT_THEM
+    where THEMEID = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptThem" >
+    insert into WT_ZHFWPT_THEM (THEMEID,THEMETITLE,LRRZH,LRRQ,DQZT)
+    values (#{themeid},#{themetitle},#{lrrzh},#{lrrq},#{dqzt})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptThem" >
+    update WT_ZHFWPT_THEM
+    <set>
+      <if test="themetitle != null" >
+        THEMETITLE = #{themetitle},
+      </if>
+      <if test="lrrzh != null" >
+        LRRZH = #{lrrzh},
+      </if>
+      <if test="lrrq != null" >
+        LRRQ = #{lrrq},
+      </if>
+      <if test="dqzt != null" >
+        DQZT = #{dqzt},
+      </if>
+    </set>
+    where THEMEID = #{themeid} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtQdxxb" >
+    update FROPERQDXXB
+    set 
+        THEMETITLE = #{themetitle},
+        LRRZH = #{lrrzh},
+        LRRQ = #{lrrq},
+        DQZT = #{dqzt}
+    where THEMEID = #{themeid} ${dsf}
+  </update>
+</mapper>

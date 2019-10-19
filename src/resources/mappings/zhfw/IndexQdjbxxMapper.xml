@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.IndexQdjbxxDao" >
+	<resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.IndexQdjbxx" >
+		<result column="countfwl" property="countfwl" jdbcType="VARCHAR" />
+		<result column="countywsll" property="countywsll" jdbcType="VARCHAR" />
+		<result column="countzxrs" property="countzxrs" jdbcType="VARCHAR" />
+		<result column="counttsrs" property="counttsrs" jdbcType="VARCHAR" />
+		
+		<result column="columnvalue" property="columnvalue" jdbcType="VARCHAR" />
+		<result column="countwzqdfwl" property="countwzqdfwl" jdbcType="VARCHAR" />
+		<result column="countwtqdfwl" property="countwtqdfwl" jdbcType="VARCHAR" />
+		<result column="countappqdfwl" property="countappqdfwl" jdbcType="VARCHAR" />
+		<result column="countwxqdfwl" property="countwxqdfwl" jdbcType="VARCHAR" />
+
+		<result column="countzdqdfwl" property="countzdqdfwl" jdbcType="VARCHAR" />
+		<result column="countrxqdfwl" property="countrxqdfwl" jdbcType="VARCHAR" />
+		<result column="countdxqdfwl" property="countdxqdfwl" jdbcType="VARCHAR" />
+	</resultMap>
+	
+	<sql id="Base_Column_List" >
+		countfwl,countywsll,countzxrs,counttsrs
+	</sql>
+	<select id="selectIndex" resultMap="BaseResultMap">
+		select
+		<include refid="Base_Column_List"/>
+		from (select
+				(SELECT COUNT(ywlsh) FROM wt_yhfwrzb WHERE rq &gt;= TRUNC(SYSDATE) AND rq &lt; TRUNC(SYSDATE + 1)) countfwl,
+				(SELECT COUNT(ywlsh) FROM wt_yhfwrzb WHERE rq &gt;= TRUNC(SYSDATE) AND rq &lt; TRUNC(SYSDATE + 1) AND fwid IN(SELECT fwid FROM wt_fwdjxx WHERE fwxz = '1')) countywsll,
+				(SELECT COUNT(GUESTBOOKID) FROM wt_zhfwpt_guestbook WHERE addtime &gt;= TRUNC(SYSDATE) AND addtime &lt; TRUNC(SYSDATE + 1) AND classid = '8') countzxrs,
+				(SELECT COUNT(GUESTBOOKID) FROM wt_zhfwpt_guestbook WHERE addtime &gt;= TRUNC(SYSDATE) AND addtime &lt; TRUNC(SYSDATE + 1) AND classid = '33') counttsrs
+			  from dual
+			) a
+	</select>
+	
+	
+	<sql id="Base_Column_ListQdfwl">
+		column_value as columnvalue,
+		nvl(countwzqdfwl,0) as countwzqdfwl,
+		nvl(countwtqdfwl,0) as countwtqdfwl,
+		nvl(countappqdfwl,0) as countappqdfwl,
+		nvl(countwxqdfwl,0) as countwxqdfwl,
+		nvl(countzdqdfwl,0) as countzdqdfwl,
+		nvl(countrxqdfwl,0) as countrxqdfwl,
+		nvl(countdxqdfwl,0) as countdxqdfwl
+	</sql>
+	<select id="selectIndexQdfwl" resultMap="BaseResultMap" parameterType="String">
+		select
+		<include refid="Base_Column_ListQdfwl"/>
+		from table(fn_split_string(#{timeStr},'|')) a
+		left outer join 
+		(SELECT sum(tjz) countwzqdfwl, to_char(tjrq,'yyyy/mm/dd') countwzqdfwltime from wt_s_rtjxx WHERE tjrq &gt;= TRUNC(SYSDATE - 7) AND tjrq &lt; TRUNC(SYSDATE) AND tjzb='fwfwl' AND qdid = 'QD003' GROUP BY to_char(tjrq,'yyyy/mm/dd')
+		) b on a.column_value = b.countwzqdfwltime
+		left outer join
+		(SELECT sum(tjz) countwtqdfwl, to_char(tjrq,'yyyy/mm/dd') countwtqdfwltime from wt_s_rtjxx WHERE tjrq &gt;= TRUNC(SYSDATE - 7) AND tjrq &lt; TRUNC(SYSDATE) AND tjzb='fwfwl' AND qdid = 'QD001' GROUP BY to_char(tjrq,'yyyy/mm/dd')
+		) c on a.column_value = c.countwtqdfwltime
+		left outer join
+		(SELECT sum(tjz) countappqdfwl, to_char(tjrq,'yyyy/mm/dd') countappqdfwltime from wt_s_rtjxx WHERE tjrq &gt;= TRUNC(SYSDATE - 7) AND tjrq &lt; TRUNC(SYSDATE) AND tjzb='fwfwl' AND qdid = 'QD002' GROUP BY to_char(tjrq,'yyyy/mm/dd')
+		) d on a.column_value = d.countappqdfwltime
+		left outer join
+		(SELECT sum(tjz) countwxqdfwl, to_char(tjrq,'yyyy/mm/dd') countwxqdfwltime from wt_s_rtjxx WHERE tjrq &gt;= TRUNC(SYSDATE - 7) AND tjrq &lt; TRUNC(SYSDATE) AND tjzb='fwfwl' AND qdid = 'QD004' GROUP BY to_char(tjrq,'yyyy/mm/dd')
+		) f on a.column_value = f.countwxqdfwltime
+		left outer join
+		(SELECT sum(tjz) countzdqdfwl, to_char(tjrq,'yyyy/mm/dd') counttime from wt_s_rtjxx WHERE tjrq &gt;= TRUNC(SYSDATE - 7) AND tjrq &lt; TRUNC(SYSDATE) AND tjzb='fwfwl' AND qdid = 'QD006' GROUP BY to_char(tjrq,'yyyy/mm/dd')
+		) h on a.column_value = h.counttime
+		left outer join
+		(SELECT sum(tjz) countrxqdfwl, to_char(tjrq,'yyyy/mm/dd') counttime from wt_s_rtjxx WHERE tjrq &gt;= TRUNC(SYSDATE - 7) AND tjrq &lt; TRUNC(SYSDATE) AND tjzb='fwfwl' AND qdid = 'QD007' GROUP BY to_char(tjrq,'yyyy/mm/dd')
+		) k on a.column_value = k.counttime
+		left outer join
+		(SELECT sum(tjz) countdxqdfwl, to_char(tjrq,'yyyy/mm/dd') counttime from wt_s_rtjxx WHERE tjrq &gt;= TRUNC(SYSDATE - 7) AND tjrq &lt; TRUNC(SYSDATE) AND tjzb='fwfwl' AND qdid = 'QD008' GROUP BY to_char(tjrq,'yyyy/mm/dd')
+		) l on a.column_value = l.counttime
+		order by column_value asc
+	</select>
+
+</mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

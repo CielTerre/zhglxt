@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtQdxxbDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtQdxxb" >
+    <id column="qdid" property="qdid" jdbcType="VARCHAR" />
+    <result column="qdmc" property="qdmc" jdbcType="VARCHAR" />
+    <result column="qdsm" property="qdsm" jdbcType="VARCHAR" />
+    <result column="qdjrip" property="qdjrip" jdbcType="VARCHAR" />
+    <result column="qdjrdk" property="qdjrdk" jdbcType="VARCHAR" />
+    <result column="qdjrzh" property="qdjrzh" jdbcType="VARCHAR" />
+    <result column="qdjrmm" property="qdjrmm" jdbcType="VARCHAR" />
+    <result column="qdlxr" property="qdlxr" jdbcType="VARCHAR" />
+    <result column="zjlx" property="zjlx" jdbcType="VARCHAR" />
+    <result column="zjhm" property="zjhm" jdbcType="VARCHAR" />
+    <result column="lxdh" property="lxdh" jdbcType="VARCHAR" />
+    <result column="sjhm" property="sjhm" jdbcType="VARCHAR" />
+    <result column="yxdz" property="yxdz" jdbcType="VARCHAR" />
+    <result column="qqhm" property="qqhm" jdbcType="VARCHAR" />
+    <result column="wxhm" property="wxhm" jdbcType="VARCHAR" />
+    <result column="lxdz" property="lxdz" jdbcType="VARCHAR" />
+    <result column="yzbm" property="yzbm" jdbcType="VARCHAR" />
+    <result column="zdbfl" property="zdbfl" jdbcType="DECIMAL" />
+    <result column="cgbflts" property="cgbflts" jdbcType="VARCHAR" />
+    <result column="qdktrq" property="qdktrq" jdbcType="DATE" />
+    <result column="qdtyrq" property="qdtyrq" jdbcType="DATE" />
+    <result column="qdxhrq" property="qdxhrq" jdbcType="DATE" />
+    <result column="qdzt" property="qdzt" jdbcType="VARCHAR" />
+    <result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+    <result column="zhczrzh" property="zhczrzh" jdbcType="VARCHAR" />
+    <result column="zhczrxm" property="zhczrxm" jdbcType="VARCHAR" />
+    <result column="zhczrq" property="zhczrq" jdbcType="DATE" />
+    <result column="zhczqdid" property="zhczqdid" jdbcType="VARCHAR" />
+    <result column="token" property="token" jdbcType="VARCHAR" />
+    <result column="drfwsx" property="drfwsx" jdbcType="DECIMAL" />
+    <result column="drywlsx" property="drywlsx" jdbcType="DECIMAL" />
+    <result column="tzjrtj" property="tzjrtj" jdbcType="VARCHAR" />
+    <result column="tmfs" property="tmfs" jdbcType="VARCHAR"/>
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  qdid,qdmc,qdsm,qdjrip,qdjrdk,qdjrzh,qdjrmm,qdlxr,zjlx,zjhm,lxdh,sjhm,yxdz,qqhm,wxhm,lxdz,yzbm,zdbfl,cgbflts,qdktrq,qdtyrq,qdxhrq,qdzt,beizhu,zhczrzh,zhczrxm,zhczrq,zhczqdid,token,drfwsx,drywlsx,tzjrtj,tmfs
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from FROPERQDXXB
+    where qdid = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtQdxxb" >
+    select 
+    <include refid="Base_Column_List" />
+    from FROPERQDXXB
+    <where>
+      qdid != 'QD000'
+    </where>
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- 默认排序设置 -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from FROPERQDXXB
+    where qdid = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtQdxxb" >
+    insert into FROPERQDXXB (qdid,qdmc,qdsm,qdjrip,qdjrzh,qdjrmm,qdlxr,sjhm,zdbfl,cgbflts,qdzt,beizhu,zhczrzh,zhczrxm,zhczrq,zhczqdid,token,drfwsx,drywlsx,tzjrtj)
+    values (#{qdid},#{qdmc},#{qdsm},#{qdjrip},#{qdjrzh},#{qdjrmm},#{qdlxr},#{sjhm},#{zdbfl},#{cgbflts},#{qdzt},#{beizhu},#{zhczrzh},#{zhczrxm},#{zhczrq},#{zhczqdid},#{token},#{drfwsx},#{drywlsx},#{tzjrtj})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtQdxxb" >
+    update FROPERQDXXB
+    <set>
+      <if test="qdmc != null" >
+        qdmc = #{qdmc},
+      </if>
+      <if test="qdsm != null" >
+        qdsm = #{qdsm},
+      </if>
+      <if test="qdjrip != null" >
+        qdjrip = #{qdjrip},
+      </if>
+      <if test="qdjrzh != null" >
+        qdjrzh = #{qdjrzh},
+      </if>
+      <if test="qdjrmm != null" >
+        qdjrmm = #{qdjrmm},
+      </if>
+      <if test="qdlxr != null" >
+        qdlxr = #{qdlxr},
+      </if>
+      <if test="sjhm != null" >
+        sjhm = #{sjhm},
+      </if>
+      <if test="zdbfl != null" >
+        zdbfl = #{zdbfl},
+      </if>
+      <if test="cgbflts != null" >
+        cgbflts = #{cgbflts},
+      </if>
+      <if test="qdzt != null" >
+        qdzt = #{qdzt},
+      </if>
+      <if test="beizhu != null" >
+        beizhu = #{beizhu},
+      </if>
+      <if test="token != null" >
+        token = #{token},
+      </if>
+      <if test="drfwsx != null" >
+        drfwsx = #{drfwsx},
+      </if>
+      <if test="drywlsx != null" >
+        drywlsx = #{drywlsx},
+      </if>
+      <if test="tzjrtj != null" >
+        tzjrtj = #{tzjrtj},
+      </if>
+      <if test="tmfs != null" >
+      	tmfs = #{tmfs},
+      </if>
+    </set>
+    where qdid = #{id} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtQdxxb" >
+    update FROPERQDXXB
+    set 
+        qdmc = #{qdmc}
+        ,qdsm = #{qdsm}
+        ,qdjrip = #{qdjrip}
+        ,qdjrzh = #{qdjrzh}
+        ,qdjrmm = #{qdjrmm}
+        ,qdlxr = #{qdlxr}
+        ,sjhm = #{sjhm}
+        ,zdbfl = #{zdbfl}
+        ,cgbflts = #{cgbflts}
+        ,qdzt = #{qdzt}
+        ,beizhu = #{beizhu}
+        ,token = #{token}
+        ,drfwsx = #{drfwsx}
+        ,drywlsx = #{drywlsx}
+        ,tzjrtj = #{tzjrtj}
+    where qdid = #{id} ${dsf}
+  </update>
+</mapper>

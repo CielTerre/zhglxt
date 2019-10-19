@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="zhglxt:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="zhglxt.war">
+      <element id="artifact" artifact-name="zhglxt:war exploded" />
+    </root>
+  </artifact>
+</component>

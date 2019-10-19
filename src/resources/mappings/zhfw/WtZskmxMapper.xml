@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtZskmxDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtZskmx" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="flid" property="flid" jdbcType="VARCHAR" />
+    <result column="zslx" property="zslx" jdbcType="VARCHAR" />
+    <result column="fxmc" property="fxmc" jdbcType="VARCHAR" />
+    <result column="gjz" property="gjz" jdbcType="VARCHAR" />
+    <result column="zsnr" property="zsnr" jdbcType="LONGVARCHAR" />
+    <result column="llrxm" property="llrxm" jdbcType="VARCHAR" />
+    <result column="llr" property="llr" jdbcType="VARCHAR" />
+    <result column="llrq" property="llrq" jdbcType="TIMESTAMP" />
+
+    <!-- DB 字段截止 -->
+    <result column="flmc" property="flmc" jdbcType="VARCHAR" />
+
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  id,flid,zslx,fxmc,gjz,llrxm,llr,llrq
+  </sql>
+  <sql id="Blob_Column_List" >
+  zsnr
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select
+    z.*,f.flmc
+    from wt_zskmx z left outer join wt_zskfl f on z.flid=f.id
+    where  z.id = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZskmx" >
+    select
+    z.id,z.flid,z.zslx,z.fxmc,z.gjz,z.zsnr,z.llrxm,z.llr,z.llrq,f.flmc
+    from wt_zskmx z left outer join wt_zskfl f on z.flid=f.id
+    <where>
+    <if test="zslx !=null and zslx!=''">
+    and z.zslx = #{zslx}
+    </if>
+    <if test="flid !=null and flid!=''">
+      and z.flid in (SELECT  FLID FROM wt_zskfl WHERE FLID=#{flid} OR PARENT_ID=#{flid})
+    </if>
+    <if test="fxmc !=null and fxmc!=''">
+    and z.fxmc like <![CDATA[ '%'||#{fxmc}||'%']]>
+    </if>
+    <if test="gjz !=null and gjz!=''">
+    and z.gjz like <![CDATA[ '%'||#{gjz}||'%']]>
+    </if>
+	${dsf}
+    </where>
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- 默认排序设置 -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from wt_zskmx
+    where id = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZskmx" >
+    insert into wt_zskmx (id,flid,zslx,fxmc,gjz,zsnr,llrxm,llr,llrq)
+    values (#{id},#{flid},#{zslx},#{fxmc},#{gjz},#{zsnr},#{llrxm},#{llr},#{llrq})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZskmx" >
+    update wt_zskmx
+    <set>
+      <if test="flid != null" >
+        flid = #{flid},
+      </if>
+      <if test="zslx != null" >
+        zslx = #{zslx},
+      </if>
+      <if test="fxmc != null" >
+        fxmc = #{fxmc},
+      </if>
+      <if test="gjz != null" >
+        gjz = #{gjz},
+      </if>
+      <if test="zsnr != null" >
+        zsnr = #{zsnr},
+      </if>
+      <if test="llrxm != null" >
+        llrxm = #{llrxm},
+      </if>
+      <if test="llr != null" >
+        llr = #{llr},
+      </if>
+      <if test="llrq != null" >
+        llrq = #{llrq},
+      </if>
+    </set>
+    where id = #{id} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZskmx" >
+    update wt_zskmx
+    set 
+        flid = #{flid}
+        ,zslx = #{zslx}
+        ,fxmc = #{fxmc}
+        ,gjz = #{gjz}
+        ,zsnr = #{zsnr}
+        ,llrxm = #{llrxm}
+        ,llr = #{llr}
+        ,llrq = #{llrq}
+    where id = #{id} ${dsf}
+  </update>
+</mapper>

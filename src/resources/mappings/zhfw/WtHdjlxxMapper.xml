@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtHdjlxxDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtHdjlxx" >
+    <id column="ywlsh" property="ywlsh" jdbcType="VARCHAR" />
+    <result column="qdid" property="qdid" jdbcType="VARCHAR" />
+    <result column="jlzt" property="jlzt" jdbcType="VARCHAR" />
+    <result column="zxnr" property="zxnr" jdbcType="VARCHAR" />
+    <result column="gjz" property="gjz" jdbcType="VARCHAR" />
+    <result column="xgyhzh" property="xgyhzh" jdbcType="VARCHAR" />
+    <result column="fqsj" property="fqsj" jdbcType="TIMESTAMP" />
+    <result column="yhxm" property="yhxm" jdbcType="VARCHAR" />
+    <result column="kfxm" property="kfxm" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  ywlsh,qdid,jlzt,zxnr,gjz,xgyhzh,fqsj,yhxm,kfxm
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_hdjlxx
+    where ywlsh = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtHdjlxx" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_hdjlxx
+    <where>
+    <if test="qdid !=null and qdid!=''">
+    and qdid = #{qdid}
+    </if>
+    <if test="jlzt !=null and jlzt!=''">
+    and jlzt like CONCAT(CONCAT('%',#{jlzt}),'%')
+    </if>
+      <if test="yhxm !=null and yhxm !=''">
+        and yhxm like CONCAT(CONCAT('%',#{yhxm}),'%')
+      </if>
+	${dsf}
+    </where>
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- 默认排序设置 -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from wt_hdjlxx
+    where ywlsh = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtHdjlxx" >
+    insert into wt_hdjlxx (ywlsh,qdid,jlzt,zxnr,gjz,xgyhzh)
+    values (#{ywlsh},#{qdid},#{jlzt},#{zxnr},#{gjz},#{xgyhzh})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtHdjlxx" >
+    update wt_hdjlxx
+    <set>
+      <if test="ywlsh != null" >
+        ywlsh = #{ywlsh},
+      </if>
+      <if test="qdid != null" >
+        qdid = #{qdid},
+      </if>
+      <if test="jlzt != null" >
+        jlzt = #{jlzt},
+      </if>
+      <if test="zxnr != null" >
+        zxnr = #{zxnr},
+      </if>
+      <if test="gjz != null" >
+        gjz = #{gjz},
+      </if>
+      <if test="xgyhzh != null" >
+        xgyhzh = #{xgyhzh},
+      </if>
+    </set>
+    where ywlsh = #{id} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtHdjlxx" >
+    update wt_hdjlxx
+    set 
+        ywlsh = #{ywlsh}
+        ,qdid = #{qdid}
+        ,jlzt = #{jlzt}
+        ,zxnr = #{zxnr}
+        ,gjz = #{gjz}
+        ,xgyhzh = #{xgyhzh}
+        ,fqsj = #{fqsj}
+        ,yhxm =#{yhxm}
+        ,fkxm=#{fkxm}
+    where ywlsh = #{id} ${dsf}
+  </update>
+</mapper>

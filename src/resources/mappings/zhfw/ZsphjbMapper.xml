@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.ZsphjbDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.Zsphjb" >
+    <id column="ywlsh" property="ywlsh" jdbcType="VARCHAR" />
+    <result column="sppch" property="sppch" jdbcType="VARCHAR" />
+    <result column="ywbh" property="ywbh" jdbcType="VARCHAR" />
+    <result column="bldbd" property="bldbd" jdbcType="VARCHAR" />
+    <result column="blywwd" property="blywwd" jdbcType="VARCHAR" />
+    <result column="ywssdbd" property="ywssdbd" jdbcType="VARCHAR" />
+    <result column="ywsswd" property="ywsswd" jdbcType="VARCHAR" />
+    <result column="kjny" property="kjny" jdbcType="VARCHAR" />
+    <result column="ywzy" property="ywzy" jdbcType="VARCHAR" />
+    <result column="ywlbdm" property="ywlbdm" jdbcType="VARCHAR" />
+    <result column="qsywjddm" property="qsywjddm" jdbcType="VARCHAR" />
+    <result column="qsywjdmc" property="qsywjdmc" jdbcType="VARCHAR" />
+    <result column="xyywjddm" property="xyywjddm" jdbcType="VARCHAR" />
+    <result column="xyywjdmc" property="xyywjdmc" jdbcType="VARCHAR" />
+    <result column="spfx" property="spfx" jdbcType="VARCHAR" />
+    <result column="spje" property="spje" jdbcType="DECIMAL" />
+    <result column="spqx" property="spqx" jdbcType="INTEGER" />
+    <result column="sptyf" property="sptyf" jdbcType="VARCHAR" />
+    <result column="spyj" property="spyj" jdbcType="VARCHAR" />
+    <result column="sprzh" property="sprzh" jdbcType="VARCHAR" />
+    <result column="sprxm" property="sprxm" jdbcType="VARCHAR" />
+    <result column="sprq" property="sprq" jdbcType="TIMESTAMP" />
+    <result column="spqdid" property="spqdid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  ywlsh,sppch,ywbh,bldbd,blywwd,ywssdbd,ywsswd,kjny,ywzy,ywlbdm,qsywjddm,qsywjdmc,xyywjddm,xyywjdmc,spfx,spje,spqx,sptyf,spyj,sprzh,sprxm,sprq,spqdid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from zsphjb
+    where id = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.Zsphjb" >
+    select 
+    <include refid="Base_Column_List" />
+    from zsphjb
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+  <!-- 默认排序设置 -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from zsphjb
+    where id = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.Zsphjb" >
+    insert into zsphjb (ywlsh,sppch,ywbh,bldbd,blywwd,ywssdbd,ywsswd,kjny,ywzy,ywlbdm,qsywjddm,qsywjdmc,xyywjddm,xyywjdmc,spfx,spje,spqx,sptyf,spyj,sprzh,sprxm,sprq,spqdid)
+    values (#{ywlsh},#{sppch},#{ywbh},#{bldbd},#{blywwd},#{ywssdbd},#{ywsswd},#{kjny},#{ywzy},#{ywlbdm},#{qsywjddm},#{qsywjdmc},#{xyywjddm},#{xyywjdmc},#{spfx},#{spje},#{spqx},#{sptyf},#{spyj},#{sprzh},#{sprxm},#{sprq},#{spqdid})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.Zsphjb" >
+    update zsphjb
+    <set>
+      <if test="ywlsh != null" >
+        ywlsh = #{ywlsh},
+      </if>
+      <if test="sppch != null" >
+        sppch = #{sppch},
+      </if>
+      <if test="ywbh != null" >
+        ywbh = #{ywbh},
+      </if>
+      <if test="bldbd != null" >
+        bldbd = #{bldbd},
+      </if>
+      <if test="blywwd != null" >
+        blywwd = #{blywwd},
+      </if>
+      <if test="ywssdbd != null" >
+        ywssdbd = #{ywssdbd},
+      </if>
+      <if test="ywsswd != null" >
+        ywsswd = #{ywsswd},
+      </if>
+      <if test="kjny != null" >
+        kjny = #{kjny},
+      </if>
+      <if test="ywzy != null" >
+        ywzy = #{ywzy},
+      </if>
+      <if test="ywlbdm != null" >
+        ywlbdm = #{ywlbdm},
+      </if>
+      <if test="qsywjddm != null" >
+        qsywjddm = #{qsywjddm},
+      </if>
+      <if test="qsywjdmc != null" >
+        qsywjdmc = #{qsywjdmc},
+      </if>
+      <if test="xyywjddm != null" >
+        xyywjddm = #{xyywjddm},
+      </if>
+      <if test="xyywjdmc != null" >
+        xyywjdmc = #{xyywjdmc},
+      </if>
+      <if test="spfx != null" >
+        spfx = #{spfx},
+      </if>
+      <if test="spje != null" >
+        spje = #{spje},
+      </if>
+      <if test="spqx != null" >
+        spqx = #{spqx},
+      </if>
+      <if test="sptyf != null" >
+        sptyf = #{sptyf},
+      </if>
+      <if test="spyj != null" >
+        spyj = #{spyj},
+      </if>
+      <if test="sprzh != null" >
+        sprzh = #{sprzh},
+      </if>
+      <if test="sprxm != null" >
+        sprxm = #{sprxm},
+      </if>
+      <if test="sprq != null" >
+        sprq = #{sprq},
+      </if>
+      <if test="spqdid != null" >
+        spqdid = #{spqdid},
+      </if>
+    </set>
+    where id = #{id} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.Zsphjb" >
+    update zsphjb
+    set 
+        ywlsh = #{ywlsh}
+        ,sppch = #{sppch}
+        ,ywbh = #{ywbh}
+        ,bldbd = #{bldbd}
+        ,blywwd = #{blywwd}
+        ,ywssdbd = #{ywssdbd}
+        ,ywsswd = #{ywsswd}
+        ,kjny = #{kjny}
+        ,ywzy = #{ywzy}
+        ,ywlbdm = #{ywlbdm}
+        ,qsywjddm = #{qsywjddm}
+        ,qsywjdmc = #{qsywjdmc}
+        ,xyywjddm = #{xyywjddm}
+        ,xyywjdmc = #{xyywjdmc}
+        ,spfx = #{spfx}
+        ,spje = #{spje}
+        ,spqx = #{spqx}
+        ,sptyf = #{sptyf}
+        ,spyj = #{spyj}
+        ,sprzh = #{sprzh}
+        ,sprxm = #{sprxm}
+        ,sprq = #{sprq}
+        ,spqdid = #{spqdid}
+    where id = #{id} ${dsf}
+  </update>
+</mapper>

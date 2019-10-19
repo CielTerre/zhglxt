@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.LyclDao">
+   <resultMap type="com.seezoon.framework.modules.zhfw.entity.Lycl" id="BaseResultMap">
+     <id column="guestbookid" property="guestbookid" jdbcType="VARCHAR" />
+     <result column="title" property="title" jdbcType="VARCHAR"/>
+     <result column="lyqd" property="lyqd" jdbcType="VARCHAR"/>
+     <result column="username" property="username" jdbcType="VARCHAR"/>
+     <result column="lxfs" property="lxfs" jdbcType="VARCHAR"/>
+     <result column="addtime" property="addtime" jdbcType="TIMESTAMP"/>
+     <result column="shzt" property="shzt" jdbcType="VARCHAR"/>
+     <result column="retime" property="retime" jdbcType="TIMESTAMP"/>
+     <!-- <result column="gdbh" property="gdbh" jdbcType="VARCHAR"/> -->
+     <result column="content" property="content" jdbcType="VARCHAR"/> 
+     <result column="recontent" property="recontent" jdbcType="VARCHAR"/>
+      <result column="classid" property="classid" jdbcType="VARCHAR"/> 
+       <result column="zskid" property="zskid" jdbcType="VARCHAR"/>
+       <result column="zsnr" property="zsnr" jdbcType="VARCHAR"/> 
+       <result column="fxmc" property="fxmc" jdbcType="VARCHAR"/>   
+         <result column="ywlsh" property="ywlsh" jdbcType="VARCHAR"/>  
+         <result column="gjz" property="gjz" jdbcType="VARCHAR"/>    
+   </resultMap>  
+   <!--   -->
+   <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.Lycl">
+    select guestbookid,ywlsh,title,gdbh,recontent,classid,lyqd,username,lxfs,shzt,addtime,retime from wt_zhfwpt_guestbook k left outer join wt_gdxx x on  k.guestbookid=x.XGYWLSH
+       <where>          
+         <!-- 留言审核查询条件 -->
+     <if test=" shzt != null ">
+       and shzt=#{shzt}
+     </if>  
+     <if test="lyqdid !=null and lyqdid!=''">
+     	and lyqdid = #{lyqdid} 
+     </if>
+     <if test="classid !=null and classid!=''">
+     	and classid = #{classid} 
+      </if>
+       <if test="title !=null and title!=''">
+     	and title like <![CDATA[ '%'||#{title}||'%']]>
+      </if> 
+      <!-- 留言回复和留言回复知识库查询条件 -->    
+        ${dsf}   
+    </where> 
+     <choose>
+     <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when> 
+    <otherwise>
+  <!--  默认排序设置 -->
+    </otherwise>
+    </choose>    
+   </select> 
+   
+
+   <!--留言 按钮的查询 -->
+   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.Lycl" >
+    select guestbookid,shzt,title,zskid,recontent,classid,lyqd,username,lxfs,addtime,retime,content from wt_zhfwpt_guestbook
+    where guestbookid = #{guestbookid}
+  </select>
+  
+
+  
+  <!-- 加入知识库的同时更新zskid-->
+  <update id="zskupdateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.Lycl">
+   update wt_zhfwpt_guestbook  
+   <set>
+     <if test="zskid != null">
+     zskid = #{zskid}
+     </if>
+   </set>  
+   where guestbookid = #{guestbookid}
+  </update>
+  
+  <!--留言回复   留言审核   留言回复归档   的处理状态修改-->
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.Lycl">
+   update wt_zhfwpt_guestbook  
+   <set>
+     <if test="shzt != null">
+     shzt = #{shzt}
+     </if>
+   </set>  
+   where guestbookid = #{guestbookid}
+  </update>
+   <!-- 留言回复删除按钮 -->
+   <delete id="deleteByid" parameterType="com.seezoon.framework.modules.zhfw.entity.Lycl" >
+    delete from wt_zhfwpt_guestbook
+    where guestbookid = #{guestbookid}
+  </delete>
+  
+    <!--   留言回复的处理状态修改-->
+  <update id="hflyupdateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.Lycl">
+   update wt_zhfwpt_guestbook  
+   <set>
+     <if test="recontent != null">
+     recontent = #{recontent},
+     </if>
+     <if test="shzt != null">
+     shzt = #{shzt}
+     </if>
+   </set>  
+   where guestbookid = #{guestbookid}
+  </update>
+  
+  
+</mapper>

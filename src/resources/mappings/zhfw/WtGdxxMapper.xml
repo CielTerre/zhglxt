@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtGdxxDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtGdxx" >
+    <id column="ywlsh" property="ywlsh" jdbcType="VARCHAR" />
+    <result column="gdbh" property="gdbh" jdbcType="VARCHAR" />
+    <result column="gdly" property="gdly" jdbcType="VARCHAR" />
+    <result column="jjcd" property="jjcd" jdbcType="CHAR" />
+    <result column="yqwcsj" property="yqwcsj" jdbcType="DATE" />
+    <result column="gdbt" property="gdbt" jdbcType="VARCHAR" />
+    <result column="gdnr" property="gdnr" jdbcType="VARCHAR" />
+    <result column="xgywlsh" property="xgywlsh" jdbcType="VARCHAR" />
+    <result column="dqzt" property="dqzt" jdbcType="VARCHAR" />
+    <result column="llr" property="llr" jdbcType="VARCHAR" />
+    <result column="llrq" property="llrq" jdbcType="VARCHAR" />
+    <result column="clr" property="clr" jdbcType="VARCHAR" />
+    <result column="clsj" property="clsj" jdbcType="DATE" />
+    <result column="cljg" property="cljg" jdbcType="VARCHAR" />
+    <result column="lyqdid" property="lyqdid" jdbcType="VARCHAR" />
+    <result column="hfzt" property="hfzt" jdbcType="VARCHAR" />
+    <result column="hfsj" property="hfsj" jdbcType="DATE" />
+    <result column="yhmyd" property="yhmyd" jdbcType="VARCHAR" />
+    <result column="hfnr" property="hfnr" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <sql id="Base_Column_List" >
+    ywlsh,gdbh,gdly,jjcd,yqwcsj,gdbt,gdnr,xgywlsh,dqzt,llr,llrq,clr,clsj,cljg,lyqdid,hfzt,hfsj,yhmyd,hfnr
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select
+    <include refid="Base_Column_List" />
+    from wt_gdxx
+    where ywlsh = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtGdxx" >
+    select
+    <include refid="Base_Column_List" />
+    from wt_gdxx
+    <where>
+      <if test="gdbh !=null and gdbh!=''">
+        and gdbh like <![CDATA[ '%'||#{gdbh}||'%']]>
+      </if>
+      <if test="jjcd !=null and jjcd!=''">
+        and jjcd = #{jjcd}
+      </if>
+      <if test="lyqdid !=null and lyqdid!=''">
+        and lyqdid = #{lyqdid}
+      </if>
+      <if test="gdly !=null and gdly!=''">
+        and gdly = #{gdly}
+      </if>
+      <if test="gdbt !=null and gdbt!=''">
+        and gdbt like <![CDATA[ '%'||#{gdbt}||'%']]>
+      </if>
+      <if test="clr !=null and clr!=''">
+        and clr = #{clr}
+      </if>
+      <if test="dqzt !=null and dqzt!=''">
+        and dqzt in (#{dqzt})
+      </if>
+      <if test="hfzt !=null and hfzt!=''">
+        and hfzt in (#{hfzt})
+      </if>
+      ${dsf}
+    </where>
+    <choose>
+      <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+        order by ${sortField} ${direction}
+      </when>
+      <otherwise>
+        <!-- 默认排序设置 -->
+      </otherwise>
+    </choose>
+  </select>
+  <select id="getMaxGdbh" resultType="String">
+    SELECT
+    nvl(max(GDBH),<![CDATA[ 'GD-'|| #{time} ||'000000000']]>) gdbh
+    FROM WT_GDXX
+    WHERE GDBH like <![CDATA[ 'GD-'|| #{time} ||'%']]>
+    AND length(GDBH)=20
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from wt_gdxx
+    where ywlsh = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtGdxx" >
+    insert into wt_gdxx (ywlsh,gdbh,gdly,jjcd,yqwcsj,gdbt,gdnr,xgywlsh,dqzt,llr,llrq,clr,clsj,cljg,lyqdid,hfzt,hfsj,yhmyd,hfnr)
+    values (#{ywlsh},#{gdbh},#{gdly},#{jjcd},#{yqwcsj},#{gdbt},#{gdnr},#{xgywlsh},#{dqzt},#{llr},#{llrq},#{clr},#{clsj},#{cljg},#{lyqdid},#{hfzt},#{hfsj},#{yhmyd},#{hfnr})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtGdxx" >
+    update wt_gdxx
+    <set>
+      <if test="gdbh != null" >
+        gdbh = #{gdbh},
+      </if>
+      <if test="gdly != null" >
+        gdly = #{gdly},
+      </if>
+      <if test="jjcd != null" >
+        jjcd = #{jjcd},
+      </if>
+      <if test="yqwcsj != null" >
+        yqwcsj = #{yqwcsj},
+      </if>
+      <if test="gdbt != null" >
+        gdbt = #{gdbt},
+      </if>
+      <if test="gdnr != null" >
+        gdnr = #{gdnr},
+      </if>
+      <if test="xgywlsh != null" >
+        xgywlsh = #{xgywlsh},
+      </if>
+      <if test="dqzt != null" >
+        dqzt = #{dqzt},
+      </if>
+      <if test="llr != null" >
+        llr = #{llr},
+      </if>
+      <if test="llrq != null" >
+        llrq = #{llrq},
+      </if>
+      <if test="clr != null" >
+        clr = #{clr},
+      </if>
+      <if test="clsj != null" >
+        clsj = #{clsj},
+      </if>
+      <if test="cljg != null" >
+        cljg = #{cljg},
+      </if>
+      <if test="lyqdid != null" >
+        lyqdid = #{lyqdid},
+      </if>
+      <if test="hfzt != null" >
+        hfzt = #{hfzt},
+      </if>
+      <if test="hfsj != null" >
+        hfsj = #{hfsj},
+      </if>
+      <if test="yhmyd != null" >
+        yhmyd = #{yhmyd},
+      </if>
+      <if test="hfnr != null" >
+        hfnr = #{hfnr},
+      </if>
+    </set>
+    where ywlsh = #{ywlsh} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtGdxx" >
+    update wt_gdxx
+    set
+        gdbh = #{gdbh}
+        ,gdly = #{gdly}
+        ,jjcd = #{jjcd}
+        ,yqwcsj = #{yqwcsj}
+        ,gdbt = #{gdbt}
+        ,gdnr = #{gdnr}
+        ,xgywlsh = #{xgywlsh}
+        ,dqzt = #{dqzt}
+        ,llr = #{llr}
+        ,llrq = #{llrq}
+        ,clr = #{clr}
+        ,clsj = #{clsj}
+        ,cljg = #{cljg}
+        ,lyqdid = ${lyqdid}
+        ,HFZT = ${hfzt}
+        ,HFSJ = ${hfsj}
+        ,YHMYD = ${yhmyd}
+        ,hfnr = ${hfnr}
+    where ywlsh = #{ywlsh} ${dsf}
+  </update>
+</mapper>

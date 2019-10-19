@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtYhfwrzDao" >
+	
+	<resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtYhfwrz" >
+	   <id column="ywlsh" property="ywlsh" jdbcType="VARCHAR" />
+	   <result column="yhid" property="yhid" jdbcType="VARCHAR" />
+	   <result column="yhzh" property="yhzh" jdbcType="VARCHAR" />
+	   <result column="fwid" property="fwid" jdbcType="VARCHAR" />
+	   <result column="fwsm" property="fwmc" jdbcType="VARCHAR" />
+	   <result column="qqlx" property="qqlx" jdbcType="VARCHAR" />
+	   <result column="qdid" property="qdid" jdbcType="VARCHAR" />
+	   <result column="rq" property="rq" jdbcType="TIMESTAMP" />
+	 </resultMap>
+
+	<sql id="Base_Column_List" >
+  		fwsm,xgyhzh1 as yhzh,ywlsh,yhid,w.fwid,bzxx,qdid,rq,qqlx
+  	</sql>
+	
+	<select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtYhfwrz" >
+		select 
+    	<include refid="Base_Column_List" />
+    	from wt_yhfwrzb w,froperaccnt f,wt_fwdjxx r
+    	<where>
+    	and w.yhid = f.froaid 
+    	and w.fwid = r.fwid
+    	<if test="yhzh !=null and yhzh!=''">
+	    	and f.xgyhzh1= #{yhzh}
+	    </if>
+	    <if test="qqlx !=null and qqlx!=''">
+	    	and qqlx = #{qqlx}
+	    </if>
+	    <if test="fwfl !=null and fwfl!=''">
+	    	and r.fwfl = #{fwfl}
+	    </if>
+	    <if test="qdid !=null and qdid!=''">
+	    	and w.qdid = #{qdid}
+	    </if>
+	    <if test="fwmc !=null and fwmc!=''">
+	    	and r.fwsm like <![CDATA[ '%'||#{fwmc}||'%']]>
+	    </if>
+	    <if test="startTime !=null and startTime!=''">
+	    	<![CDATA[ and to_date(to_char(rq,'YYYY-MM-DD'),'YYYY-MM-DD') >= to_date(#{startTime},'YYYY-MM-DD')]]>
+	    </if>
+	    <if test="endTime !=null and endTime!=''">
+	    	<![CDATA[ and to_date(to_char(rq,'YYYY-MM-DD'),'YYYY-MM-DD') <= to_date(#{endTime},'YYYY-MM-DD')]]>
+	    </if>
+	    	and yhid is not null
+    	</where>
+    	<!-- order by rq desc -->
+	</select>
+</mapper>

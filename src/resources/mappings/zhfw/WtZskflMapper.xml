@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtZskflDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtZskfl" >
+    <id column="id" property="id" jdbcType="VARCHAR" />
+    <result column="parent_id" property="parentId" jdbcType="VARCHAR" />
+    <result column="parent_ids" property="parentIds" jdbcType="VARCHAR" />
+    <result column="flmc" property="flmc" jdbcType="VARCHAR" />
+    <result column="flcx" property="flcx" jdbcType="INTEGER" />
+    <result column="zslx" property="zslx" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  id,parent_id,parent_ids,flmc,flcx,zslx
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_zskfl
+    where id = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZskfl" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_zskfl
+    <where>
+      <if test="zslx !=null and zslx!=''">
+        and zslx = #{zslx}
+      </if>
+      ${dsf}
+    </where>
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- 默认排序设置 -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from wt_zskfl
+    where id = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZskfl" >
+    insert into wt_zskfl (id,parent_id,parent_ids,flmc,flcx,zslx)
+    values (#{id},#{parentId},#{parentIds},#{flmc},#{flcx},#{zslx})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZskfl" >
+    update wt_zskfl
+    <set>
+      <if test="parentId != null and parentId != '' " >
+        parent_id = #{parentId},
+      </if>
+      <if test="parentIds != null and parentIds != '' " >
+        parent_ids = #{parentIds},
+      </if>
+      <if test="flmc != null and flmc != '' " >
+        flmc = #{flmc},
+      </if>
+      <if test="flcx != null and flcx != '' " >
+        flcx = #{flcx},
+      </if>
+      <if test="zslx != null and zslx != '' " >
+        zslx = #{zslx},
+      </if>
+    </set>
+    where id = #{id} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZskfl" >
+    update wt_zskfl
+    set 
+        parent_id = #{parentId}
+        ,parent_ids = #{parentIds}
+        ,flmc = #{flmc}
+        ,flcx = #{flcx}
+        ,zslx = #{zslx}
+    where id = #{id} ${dsf}
+  </update>
+</mapper>

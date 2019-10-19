@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtZhfwptQtClassDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtClass" >
+    <id column="classid" property="classid" jdbcType="VARCHAR" />
+    <result column="classname" property="classname" jdbcType="VARCHAR" />
+    <result column="classname2" property="classname2" jdbcType="VARCHAR" />
+    <result column="topid" property="topid" jdbcType="VARCHAR" />
+    <result column="num" property="num" jdbcType="VARCHAR" />
+    <result column="ismenu" property="ismenu" jdbcType="VARCHAR" />
+    <result column="isindex" property="isindex" jdbcType="VARCHAR" />
+    <result column="qdgxid" property="qdgxid" jdbcType="VARCHAR" />
+    <result column="lmsm" property="lmsm" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  classid,classname,classname2,topid,num,ismenu,isindex,qdgxid,lmsm
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_zhfwpt_qt_class
+    where id = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtClass" >
+    select 
+    <include refid="Base_Column_List" />
+    from wt_zhfwpt_qt_class
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- 默认排序设置 -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from wt_zhfwpt_qt_class
+    where id = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtClass" >
+    insert into wt_zhfwpt_qt_class (classid,classname,classname2,topid,num,ismenu,isindex,qdgxid,lmsm)
+    values (#{classid},#{classname},#{classname2},#{topid},#{num},#{ismenu},#{isindex},#{qdgxid},#{lmsm})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtClass" >
+    update wt_zhfwpt_qt_class
+    <set>
+      <if test="classid != null" >
+        classid = #{classid},
+      </if>
+      <if test="classname != null" >
+        classname = #{classname},
+      </if>
+      <if test="classname2 != null" >
+        classname2 = #{classname2},
+      </if>
+      <if test="topid != null" >
+        topid = #{topid},
+      </if>
+      <if test="num != null" >
+        num = #{num},
+      </if>
+      <if test="ismenu != null" >
+        ismenu = #{ismenu},
+      </if>
+      <if test="isindex != null" >
+        isindex = #{isindex},
+      </if>
+      <if test="qdgxid != null" >
+        qdgxid = #{qdgxid},
+      </if>
+      <if test="lmsm != null" >
+        lmsm = #{lmsm},
+      </if>
+    </set>
+    where id = #{id} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptQtClass" >
+    update wt_zhfwpt_qt_class
+    set 
+        classid = #{classid}
+        ,classname = #{classname}
+        ,classname2 = #{classname2}
+        ,topid = #{topid}
+        ,num = #{num}
+        ,ismenu = #{ismenu}
+        ,isindex = #{isindex}
+        ,qdgxid = #{qdgxid}
+        ,lmsm = #{lmsm}
+    where id = #{id} ${dsf}
+  </update>
+</mapper>

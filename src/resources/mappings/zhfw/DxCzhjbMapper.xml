@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.DxCzhjbDao" >
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.DxCzhjb" >
+    <result column="ywlsh" property="ywlsh" jdbcType="VARCHAR" />
+    <result column="bldbd" property="bldbd" jdbcType="VARCHAR" />
+    <result column="blywwd" property="blywwd" jdbcType="VARCHAR" />
+    <result column="ywlb" property="ywlb" jdbcType="VARCHAR" />
+    <result column="xgywpch" property="xgywpch" jdbcType="VARCHAR" />
+    <result column="beizhu" property="beizhu" jdbcType="VARCHAR" />
+    <result column="czrzh" property="czrzh" jdbcType="VARCHAR" />
+    <result column="czrxm" property="czrxm" jdbcType="VARCHAR" />
+    <result column="czrq" property="czrq" jdbcType="TIMESTAMP" />
+    <result column="ywrs" property="ywrs" jdbcType="DECIMAL" />
+    <result column="wktdxrs" property="wktdxrs" jdbcType="DECIMAL" />
+    <result column="sjhmwxrs" property="sjhmwxrs" jdbcType="DECIMAL" />
+    <result column="dxfsrs" property="dxfsrs" jdbcType="DECIMAL" />
+    <result column="czqdid" property="czqdid" jdbcType="VARCHAR" />
+  </resultMap>
+  
+  <sql id="Base_Column_List" >
+  ywlsh,bldbd,blywwd,ywlb,xgywpch,beizhu,czrzh,czrxm,czrq,ywrs,wktdxrs,sjhmwxrs,dxfsrs,czqdid
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from DX_CZHJB
+    where id = #{id}
+  </select>
+  <select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.DxCzhjb" >
+    select 
+    <include refid="Base_Column_List" />
+    from DX_CZHJB
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from DX_CZHJB
+    where id = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.DxCzhjb" >
+    insert into DX_CZHJB (ywlsh,bldbd,blywwd,ywlb,xgywpch,beizhu,czrzh,czrxm,czrq,ywrs,wktdxrs,sjhmwxrs,dxfsrs,czqdid)
+    values (#{ywlsh},#{bldbd},#{blywwd},#{ywlb},#{xgywpch},#{beizhu},#{czrzh},#{czrxm},#{czrq},#{ywrs},#{wktdxrs},#{sjhmwxrs},#{dxfsrs},#{czqdid})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.DxCzhjb" >
+    update DX_CZHJB
+    <set>
+      <if test="ywlsh != null" >
+        ywlsh = #{ywlsh},
+      </if>
+      <if test="bldbd != null" >
+        bldbd = #{bldbd},
+      </if>
+      <if test="blywwd != null" >
+        blywwd = #{blywwd},
+      </if>
+      <if test="ywlb != null" >
+        ywlb = #{ywlb},
+      </if>
+      <if test="xgywpch != null" >
+        xgywpch = #{xgywpch},
+      </if>
+      <if test="beizhu != null" >
+        beizhu = #{beizhu},
+      </if>
+      <if test="czrzh != null" >
+        czrzh = #{czrzh},
+      </if>
+      <if test="czrxm != null" >
+        czrxm = #{czrxm},
+      </if>
+      <if test="czrq != null" >
+        czrq = #{czrq},
+      </if>
+      <if test="ywrs != null" >
+        ywrs = #{ywrs},
+      </if>
+      <if test="wktdxrs != null" >
+        wktdxrs = #{wktdxrs},
+      </if>
+      <if test="sjhmwxrs != null" >
+        sjhmwxrs = #{sjhmwxrs},
+      </if>
+      <if test="dxfsrs != null" >
+        dxfsrs = #{dxfsrs},
+      </if>
+      <if test="czqdid != null" >
+        czqdid = #{czqdid},
+      </if>
+    </set>
+    where id = #{id} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.DxCzhjb" >
+    update DX_CZHJB
+    set 
+        ywlsh = #{ywlsh}
+        ,bldbd = #{bldbd}
+        ,blywwd = #{blywwd}
+        ,ywlb = #{ywlb}
+        ,xgywpch = #{xgywpch}
+        ,beizhu = #{beizhu}
+        ,czrzh = #{czrzh}
+        ,czrxm = #{czrxm}
+        ,czrq = #{czrq}
+        ,ywrs = #{ywrs}
+        ,wktdxrs = #{wktdxrs}
+        ,sjhmwxrs = #{sjhmwxrs}
+        ,dxfsrs = #{dxfsrs}
+        ,czqdid = #{czqdid}
+    where id = #{id} ${dsf}
+  </update>
+</mapper>

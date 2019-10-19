@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtZhfwptVotepotionDao">
+  <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtZhfwptVotepotion" >
+	<id  column="VOTEOPTIONID" property="voteoptionid" jdbcType="VARCHAR" />
+	<result  column="THEMEID" property="themeid" jdbcType="VARCHAR" />
+	<result  column="LRRZH" property="lrrzh" jdbcType="VARCHAR" />
+	<result  column="LRRQ" property="lrrq" jdbcType="TIMESTAMP" />
+	<result  column="XPNR" property="xpnr" jdbcType="VARCHAR" />
+	<result  column="XPJG" property="xpjg" jdbcType="INTEGER" />
+	<result  column="DQZT" property="dqzt" jdbcType="VARCHAR" />
+</resultMap>
+<sql id="Base_Column_List" >
+	VOTEOPTIONID,THEMEID,LRRZH,LRRQ,XPNR,XPJG,DQZT
+</sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String" >
+    select 
+    <include refid="Base_Column_List" />
+    from WT_ZHFWPT_VOTEPOTION
+    where VOTEOPTIONID = #{id}
+  </select>
+<select id="findList" resultMap="BaseResultMap" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptVotepotion" >
+    select 
+    <include refid="Base_Column_List" />
+    from WT_ZHFWPT_VOTEPOTION
+    <where>
+      <if test="voteoptionid !=null and voteoptionid!=''">
+        VOTEOPTIONID = #{voteoptionid}
+      </if>
+      <if test="themeid !=null and themeid!=''">
+        THEMEID = #{themeid}
+      </if>
+      <if test="lrrzh !=null and lrrzh!=''">
+        LRRZH = #{lrrzh}
+      </if>
+      <if test="lrrq !=null and lrrq!=''">
+        LRRQ = #{lrrq}
+      </if>
+      <if test="xpnr !=null and xpnr!=''">
+        XPNR = #{xpnr}
+      </if>
+      <if test="xpjg !=null and xpjg!=''">
+        XPJG = #{xpjg}
+      </if>
+      <if test="dqzt !=null and dqzt!=''">
+        DQZT = #{dqzt}
+      </if>
+      ${dsf}
+    </where>
+	<choose>
+    <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+    order by ${sortField} ${direction}
+    </when>
+    <otherwise>
+   <!-- default sort -->
+    </otherwise>
+    </choose>
+  </select>
+  <delete id="deleteByPrimaryKey" >
+    delete from WT_ZHFWPT_VOTEPOTION
+    where VOTEOPTIONID = #{id} ${dsf}
+  </delete>
+    <delete id="deleteByThemeid" >
+    delete from WT_ZHFWPT_VOTEPOTION
+    where THEMEID = #{id} ${dsf}
+  </delete>
+  <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptVotepotion" >
+    insert into WT_ZHFWPT_VOTEPOTION (VOTEOPTIONID,THEMEID,LRRZH,LRRQ,XPNR,XPJG,DQZT)
+    values (#{voteoptionid},#{themeid},#{lrrzh},#{lrrq},#{xpnr},#{xpjg},#{dqzt})
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtZhfwptVotepotion" >
+    update WT_ZHFWPT_VOTEPOTION
+    <set>
+      <if test="themeid != null" >
+        THEMEID = #{themeid},
+      </if>
+      <if test="lrrzh != null" >
+        LRRZH = #{lrrzh},
+      </if>
+      <if test="lrrq != null" >
+        LRRQ = #{lrrq},
+      </if>
+      <if test="xpnr != null" >
+        XPNR = #{xpnr},
+      </if>
+      <if test="xpjg != null" >
+        XPJG = #{xpjg},
+      </if>
+      <if test="dqzt != null" >
+        DQZT = #{dqzt}
+      </if>
+    </set>
+    where VOTEOPTIONID = #{voteoptionid} ${dsf}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtQdxxb" >
+    update FROPERQDXXB
+    set 
+        THEMEID = #{themeid},
+        LRRZH = #{lrrzh},
+        LRRQ = #{lrrq},
+        XPNR = #{xpnr},
+        XPJG = #{xpjg},
+        DQZT = #{dqzt}
+    where VOTEOPTIONID = #{voteoptionid} ${dsf}
+  </update>
+</mapper>

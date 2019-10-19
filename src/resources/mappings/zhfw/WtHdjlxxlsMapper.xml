@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.WtHdjlxxlsDao">
+    <resultMap id="BaseResultMap" type="com.seezoon.framework.modules.zhfw.entity.WtHdjlxxls">
+        <id column="ywlsh" property="ywlsh" jdbcType="VARCHAR"/>
+        <result column="xgywlsh" property="xgywlsh" jdbcType="VARCHAR"/>
+        <result column="fyrlx" property="fyrlx" jdbcType="CHAR"/>
+        <result column="fyrxm" property="fyrxm" jdbcType="VARCHAR"/>
+        <result column="fyrnr" property="fyrnr" jdbcType="VARCHAR"/>
+        <result column="fysj" property="fysj" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <sql id="Base_Column_List">
+  ywlsh,xgywlsh,fyrlx,fyrxm,fyrnr,fysj
+  </sql>
+    <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="String">
+        select
+        <include refid="Base_Column_List"/>
+        from wt_hdjlxxls
+        where id = #{id}
+    </select>
+    <select id="findList" resultMap="BaseResultMap"
+            parameterType="com.seezoon.framework.modules.zhfw.entity.WtHdjlxxls">
+        select
+        <include refid="Base_Column_List"/>
+        from wt_hdjlxxls
+        <where>
+            <if test="xgywlsh!=null and xgywlsh !=''">
+                and xgywlsh = #{xgywlsh}
+            </if>
+        </where>
+        <choose>
+            <when test="sortField != null and sortField != '' and direction != null and direction !=''">
+                order by ${sortField} ${direction}
+            </when>
+            <otherwise>
+                <!-- 默认排序设置 -->
+            </otherwise>
+        </choose>
+    </select>
+    <delete id="deleteByPrimaryKey">
+    delete from wt_hdjlxxls
+    where id = #{id} ${dsf}
+  </delete>
+    <insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.WtHdjlxxls">
+    insert into wt_hdjlxxls (ywlsh,xgywlsh,fyrlx,fyrxm,fyrnr,fysj)
+    values (#{ywlsh},#{xgywlsh},#{fyrlx},#{fyrxm},#{fyrnr},#{fysj})
+  </insert>
+    <update id="updateByPrimaryKeySelective" parameterType="com.seezoon.framework.modules.zhfw.entity.WtHdjlxxls">
+        update wt_hdjlxxls
+        <set>
+            <if test="ywlsh != null">
+                ywlsh = #{ywlsh},
+            </if>
+            <if test="xgywlsh != null">
+                xgywlsh = #{xgywlsh},
+            </if>
+            <if test="fyrlx != null">
+                fyrlx = #{fyrlx},
+            </if>
+            <if test="fyrxm != null">
+                fyrxm = #{fyrxm},
+            </if>
+            <if test="fyrnr != null">
+                fyrnr = #{fyrnr},
+            </if>
+            <if test="fysj != null">
+                fysj = #{fysj},
+            </if>
+        </set>
+        where id = #{id} ${dsf}
+    </update>
+    <update id="updateByPrimaryKey" parameterType="com.seezoon.framework.modules.zhfw.entity.WtHdjlxxls">
+    update wt_hdjlxxls
+    set 
+        ywlsh = #{ywlsh}
+        ,xgywlsh = #{xgywlsh}
+        ,fyrlx = #{fyrlx}
+        ,fyrxm = #{fyrxm}
+        ,fyrnr = #{fyrnr}
+        ,fysj = #{fysj}
+    where id = #{id} ${dsf}
+  </update>
+</mapper>

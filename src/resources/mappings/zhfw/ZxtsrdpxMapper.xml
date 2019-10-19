@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.seezoon.framework.modules.zhfw.dao.ZxtsrdpxDao">
+	<resultMap type="com.seezoon.framework.modules.zhfw.entity.Zxtsrdpx"
+		id="BaseResultMap">
+		<id column="ywlsh" property="ywlsh" jdbcType="VARCHAR"/>
+		<result column="fxmc" property="fxmc" jdbcType="VARCHAR"/>
+		<result column="flid" property="flid" jdbcType="VARCHAR"/>
+		<result column="hits" property="hits" jdbcType="INTEGER"/>
+		<result column="llrq" property="llrq" jdbcType="VARCHAR"/>
+		<result column="zhfwrq" property="zhfwrq" jdbcType="DATE"/>
+		<result column="qdid" property="qdid" jdbcType="VARCHAR"/>
+		<result column="xgid" property="xgid" jdbcType="VARCHAR"/>
+		<result column="ref_type" property="ref_type" jdbcType="VARCHAR" />
+	</resultMap>
+	<select id="findList" resultMap="BaseResultMap"
+		parameterType="com.seezoon.framework.modules.zhfw.entity.Zxtsrdpx">
+		select fxmc,flid,sum(hits) hits,max(llrq) llrq,max(zhfwrq) zhfwrq
+		from WT_ZSKMX z left outer join wt_article_qdgx q on z.id=q.XGID 		
+		<where>
+		q.ref_type='3' group by fxmc,flid
+			<if test="hits != null or llrq != null or  zhfwrq != null">
+				order by
+				<choose>
+					<when test="hits != null">
+					    ${hits} desc
+					</when>
+					<when test="llrq != null">
+						${llrq} desc
+					</when>
+					<when test="zhfwrq != null">
+						${zhfwrq} desc
+					</when>
+				</choose>
+			</if>
+		</where>
+	</select>
+	<insert id="insert" parameterType="com.seezoon.framework.modules.zhfw.entity.Zxtsrdpx">
+	 insert into wt_article_qdgx(ywlsh,qdid,xgid,hits,ref_type,zhfwrq) 
+	 values(#{ywlsh},#{qdid},#{xgid},#{hits},#{ref_type},#{zhfwrq})
+	</insert>
+	
+	
+</mapper>
