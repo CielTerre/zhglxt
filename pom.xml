@@ -22,7 +22,7 @@
 		<!-- slf4j -->
 		<slf4j.version>1.7.7</slf4j.version>
 		<!-- common -->
-		<httpclient.version>4.5.2</httpclient.version>
+		<httpclient.version>4.5.13</httpclient.version>
 		<commons-lang3.version>3.3.2</commons-lang3.version>
 		<commons-io.version>2.4</commons-io.version>
 		<commons-codec.version>1.9</commons-codec.version>
